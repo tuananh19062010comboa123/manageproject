@@ -1,6 +1,8 @@
 import tornado.ioloop
 import tornado.web
 import os
+from handle_data import api_teachers
+import json
 
 root = os.path.dirname(__file__)
 
@@ -30,6 +32,14 @@ root = os.path.dirname(__file__)
 #         print(data)
 
 
+class apiTeachers(tornado.web.RequestHandler):
+    def get(self):
+        apiTeacher = api_teachers()
+
+        print(json.dumps(apiTeacher))
+        self.write(json.dumps(apiTeacher))
+
+
 class Login(tornado.web.RequestHandler):
     def get(self):
         self.render('login.html')
@@ -46,7 +56,10 @@ class Application(tornado.web.Application):
         handlers = [
             # (r"/ranker",RankerHandlerRedirect),
             # (r"/main-page", RankerHandler),
-            (r"/login", Login)
+            (r"/login", Login),
+            (r"/apiTeachers", apiTeachers),
+
+
             # (r"/registration", Registration),
             # (r"/book-detail", BookDetail),
             # (r"/your-cart", YourCart)
